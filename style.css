@@ -1,0 +1,179 @@
+/* Basic reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  display: flex;
+  height: 100vh;
+  font-family: Arial, sans-serif;
+  background-color: #121212;
+  color: #e0e0e0;
+}
+
+/* Editor Panel Styles */
+#editor-panel {
+  width: 40%;
+  padding: 20px;
+  border-right: 2px solid #333;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  background-color: #1e1e1e;
+}
+
+#editor-panel h1 {
+  margin-bottom: 10px;
+  color: #f0f0f0;
+}
+
+#source-selection {
+  margin-bottom: 10px;
+  display: flex;
+  gap: 10px;
+}
+
+#source-selection label {
+  font-size: 14px;
+  color: #e0e0e0;
+}
+
+#markdown-input {
+  flex-grow: 1;
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  font-family: monospace;
+  border: 1px solid #444;
+  border-radius: 4px;
+  resize: vertical;
+  background-color: #2c2c2c;
+  color: #e0e0e0;
+}
+
+#md-file-upload {
+  padding: 6px;
+  background-color: #2c2c2c;
+  color: #e0e0e0;
+  border: 1px solid #444;
+  border-radius: 4px;
+}
+
+/* Options Styles */
+#options {
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+#options label {
+  font-size: 14px;
+  color: #e0e0e0;
+}
+
+#render-button {
+  padding: 6px 12px;
+  font-size: 14px;
+  cursor: pointer;
+  background-color: #333;
+  color: #e0e0e0;
+  border: none;
+  border-radius: 4px;
+}
+
+#render-button:hover {
+  background-color: #444;
+}
+
+/* Slide Options Styles */
+#slide-options {
+  margin-top: 20px;
+  border-top: 1px solid #444;
+  padding-top: 10px;
+}
+
+#slide-options h2 {
+  margin-bottom: 10px;
+  font-size: 16px;
+  color: #f0f0f0;
+}
+
+.option-group {
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.option-group label {
+  margin-bottom: 4px;
+  font-size: 14px;
+  color: #e0e0e0;
+}
+
+.option-group input,
+.option-group select {
+  padding: 6px;
+  background-color: #2c2c2c;
+  color: #e0e0e0;
+  border: 1px solid #444;
+  border-radius: 4px;
+}
+
+/* Preview Panel Styles */
+#preview-panel {
+  flex-grow: 1;
+  overflow: auto;
+  position: relative;
+  background-color: #121212;
+}
+
+#preview-panel h1 {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 10;
+  background: rgba(18, 18, 18, 0.8);
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 18px;
+  color: #e0e0e0;
+}
+
+/* Reveal.js override to fill preview panel */
+.reveal {
+  height: 100%;
+  width: 100%;
+  text-align: left;
+}
+
+/* Full Screen Button Styles */
+#full-screen-button {
+  padding: 6px 12px;
+  font-size: 14px;
+  cursor: pointer;
+  background-color: #333;
+  color: #e0e0e0;
+  border: none;
+  border-radius: 4px;
+  margin-left: auto;
+}
+
+#full-screen-button:hover {
+  background-color: #444;
+}
+
+/* Full Screen Mode Styles */
+body.full-screen #editor-panel {
+  display: none;
+}
+
+body.full-screen #preview-panel {
+  width: 100%;
+}
+
+body.full-screen #preview-panel h1 {
+  display: none;
+}
