@@ -2,7 +2,6 @@
 <head>
   <meta charset="UTF-8">
   <title>Markdown to Reveal.js Converter</title>
-  <!-- Use dark theme by default -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/reveal.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/theme/black.min.css">
   <link rel="stylesheet" href="style.css">
@@ -20,11 +19,8 @@
         Upload Markdown File
       </label>
     </div>
-    <!-- Markdown Editor Container -->
     <textarea style="font-size:12px;" id="markdown-input" placeholder="Type your Markdown here..."></textarea>
-    <!-- File Upload Container -->
     <input type="file" id="md-file-upload" accept=".md" style="display:none; margin-top: 10px;">
-    
     <div id="options">
       <label>
         <input type="checkbox" id="auto-preview">
@@ -72,15 +68,14 @@
   <div id="preview-panel">
     <div class="reveal" id="preview-reveal">
       <div class="slides" id="slides-container">
-        <!-- Slides will be injected here -->
+
       </div>
     </div>
   </div>
 
-  <!-- Reveal.js and dependencies -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/reveal.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/plugin/markdown/markdown.esm.js" type="module"></script>
-  <!-- Our main JS code -->
+
   <script src="main.js" type="module"></script>
 </body>
 </html>
