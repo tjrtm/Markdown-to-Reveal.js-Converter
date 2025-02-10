@@ -173,7 +173,3 @@ body.full-screen #editor-panel {
 body.full-screen #preview-panel {
   width: 100%;
 }
-
-body.full-screen #preview-panel h1 {
-  display: none;
-}
