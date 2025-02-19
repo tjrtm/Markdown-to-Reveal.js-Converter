@@ -23,9 +23,10 @@ A powerful web-based tool that converts Markdown content into beautiful Reveal.j
 
 ### Prerequisites
 
-No installation required! The tool runs directly in your web browser and uses CDN-hosted dependencies:
+The tool runs directly in your web browser and uses CDN-hosted dependencies:
 - Reveal.js 4.5.0
 - Modern web browser with JavaScript enabled
+- localhost server, use python or visual code studio live preview add-on [[link ](https://marketplace.visualstudio.com/items?itemName=ms-vscode.live-server)
 
 ### Usage
 
