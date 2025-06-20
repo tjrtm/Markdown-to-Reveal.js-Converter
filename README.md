@@ -28,6 +28,7 @@ The tool runs directly in your web browser and uses CDN-hosted dependencies:
 - Modern web browser with JavaScript enabled
 - Local HTTP server required (e.g. `python -m http.server` or the Visual Studio Code [Live Server extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode.live-server))
 
+
 ### Usage
 
 1. **Access the Tool**
