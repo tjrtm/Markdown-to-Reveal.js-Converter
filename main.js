@@ -1,6 +1,7 @@
 // main.js
 
 import RevealMarkdown from "https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/plugin/markdown/markdown.esm.js";
+import { convertMarkdownToSlides } from './slides.js';
 
 const markdownInput = document.getElementById('markdown-input');
 const slidesContainer = document.getElementById('slides-container');
@@ -21,29 +22,6 @@ const fullScreenButton = document.getElementById('full-screen-button');
 
 let revealInstance = null;
 
-// Converts the raw markdown text into Reveal.js slide sections with additional options.
-function convertMarkdownToSlides(mdText) {
-  // Retrieve slide option values.
-  const bgColor = bgColorInput.value || "#000000";
-  const bgImage = bgImageInput.value.trim();
-  const transition = transitionSelect.value || "slide";
-  const textAlign = textAlignSelect.value || "center";
-
-  const slideSections = mdText.split(/\n---\n/);
-  const slidesHTML = slideSections.map(section => {
-    // Build data attributes for background options, transition, and text alignment.
-    let dataAttributes = `data-background-color="${bgColor}" data-transition="${transition}" data-text-align="${textAlign}"`;
-    if (bgImage) {
-      dataAttributes += ` data-background-image="${bgImage}"`;
-    }
-    // Each slide's content will be processed by Reveal Markdown.
-    return `<section ${dataAttributes} data-markdown data-separator="\\n---\\n" data-separator-vertical="\\n\\n" data-separator-notes="^Note:" data-charset="utf-8">
-  <textarea data-template>${section.trim()}</textarea>
-</section>`;
-  });
-  return slidesHTML.join('\n');
-}
-
 // Applies global text alignment and font size to all slide sections.
 function applyGlobalStyles() {
   document.querySelectorAll('#slides-container section').forEach(slide => {
@@ -55,7 +33,12 @@ function applyGlobalStyles() {
 // Renders the preview slides using the current markdown content and the slide options.
 function renderPreview() {
   const mdText = markdownInput.value;
-  const slidesHTML = convertMarkdownToSlides(mdText);
+  const slidesHTML = convertMarkdownToSlides(mdText, {
+    bgColor: bgColorInput.value || "#000000",
+    bgImage: bgImageInput.value.trim(),
+    transition: transitionSelect.value || "slide",
+    textAlign: textAlignSelect.value || "center"
+  });
   slidesContainer.innerHTML = slidesHTML;
   initializeReveal();
 }
