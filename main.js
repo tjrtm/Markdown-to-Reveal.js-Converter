@@ -174,22 +174,56 @@ autoPreviewCheckbox.checked = false;
 
 // Initial render on page load with sample markdown content.
 const initialMarkdown = `
-# Welcome to Reveal.js
+# Reveal.js Converter Demo
 
-This presentation was **generated** from Markdown with custom slide options!
-
----
-
-## Slide 2
-
-- Point one
-- Point two
+This presentation demonstrates **all** supported Markdown features.
 
 ---
 
-## Slide 3
+## Lists and Formatting
 
-> A quote in a slide.
+- **Bold** text
+- *Italic* style
+- Inline \`code\`
+- ~~Strikethrough~~
+- [Reveal.js website](https://revealjs.com)
+
+1. First item
+2. Second item
+
+---
+
+## Quotes, Code and Images
+
+> Block quotes work great.
+
+\`\`\`javascript
+console.log('Hello world');
+\`\`\`
+
+![Sample Image](https://picsum.photos/200)
+
+---
+
+## Vertical Slides
+
+Top slide content.
+
+## First sub-slide
+
+More details here.
+
+## Second sub-slide
+
+Even more info.
+
+---
+
+## Speaker Notes
+
+Content visible to the audience.
+
+Note: These notes are only shown to the presenter.
 `;
 markdownInput.value = initialMarkdown;
 updateSourceSelection();
