@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Test - Universal Presentation Builder</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/reveal.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/theme/black.min.css">
+  <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+  <div class="app-container">
+    <header class="header">
+      <div id="toolbar-container"></div>
+    </header>
+    <main class="main-content">
+      <div class="canvas-area">
+        <div id="canvas-container"></div>
+      </div>
+      <aside class="property-sidebar">
+        <div id="property-panel"></div>
+      </aside>
+    </main>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/reveal.min.js"></script>
+  
+  <script type="module">
+    console.log('🧪 Test page loading...');
+    
+    try {
+      const { App } = await import('./js/core/app.js');
+      console.log('📦 App class imported successfully');
+      
+      document.addEventListener('DOMContentLoaded', () => {
+        console.log('🎯 DOM ready, creating app...');
+        window.testApp = new App();
+      });
+    } catch (error) {
+      console.error('💥 Import error:', error);
+    }
+  </script>
+</body>
+</html>
