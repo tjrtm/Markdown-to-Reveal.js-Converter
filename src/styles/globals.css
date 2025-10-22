@@ -1,0 +1,367 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* CSS Variables */
+:root {
+  /* Light theme */
+  --color-bg-primary: #ffffff;
+  --color-bg-secondary: #f8fafc;
+  --color-bg-tertiary: #f1f5f9;
+  --color-text-primary: #0f172a;
+  --color-text-secondary: #475569;
+  --color-text-tertiary: #94a3b8;
+  --color-border: #e2e8f0;
+  --color-accent: #0ea5e9;
+  --color-accent-hover: #0284c7;
+
+  /* Glass effects */
+  --glass-bg: rgba(255, 255, 255, 0.7);
+  --glass-border: rgba(255, 255, 255, 0.18);
+  --glass-shadow: rgba(31, 38, 135, 0.37);
+}
+
+.dark {
+  /* Dark theme */
+  --color-bg-primary: #0f172a;
+  --color-bg-secondary: #1e293b;
+  --color-bg-tertiary: #334155;
+  --color-text-primary: #f8fafc;
+  --color-text-secondary: #cbd5e1;
+  --color-text-tertiary: #64748b;
+  --color-border: #334155;
+  --color-accent: #38bdf8;
+  --color-accent-hover: #7dd3fc;
+
+  /* Glass effects */
+  --glass-bg: rgba(15, 23, 42, 0.7);
+  --glass-border: rgba(255, 255, 255, 0.1);
+  --glass-shadow: rgba(0, 0, 0, 0.5);
+}
+
+/* Base Styles */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: var(--color-bg-primary);
+  color: var(--color-text-primary);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Scrollbar Styles */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-bg-secondary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-text-tertiary);
+}
+
+/* Custom Classes */
+@layer components {
+  /* Glass Card */
+  .glass-card {
+    @apply relative overflow-hidden rounded-2xl;
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border: 1px solid var(--glass-border);
+    box-shadow: 0 8px 32px 0 var(--glass-shadow);
+  }
+
+  .glass-card-hover {
+    @apply glass-card transition-transform duration-300 hover:scale-[1.02] hover:shadow-2xl;
+  }
+
+  /* Neon Button */
+  .btn-neon {
+    @apply relative px-6 py-3 rounded-lg font-semibold text-white overflow-hidden;
+    @apply transition-all duration-300;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  }
+
+  .btn-neon::before {
+    content: '';
+    @apply absolute inset-0 opacity-0 transition-opacity duration-300;
+    background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+  }
+
+  .btn-neon:hover::before {
+    @apply opacity-100;
+  }
+
+  .btn-neon:hover {
+    @apply shadow-neon-purple transform scale-105;
+  }
+
+  /* Primary Button */
+  .btn-primary {
+    @apply px-6 py-3 rounded-lg font-semibold text-white;
+    @apply transition-all duration-300;
+    @apply bg-gradient-to-r from-primary-500 to-primary-600;
+    @apply hover:from-primary-600 hover:to-primary-700;
+    @apply hover:shadow-lg hover:scale-105;
+    @apply active:scale-95;
+    @apply focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2;
+  }
+
+  /* Secondary Button */
+  .btn-secondary {
+    @apply px-6 py-3 rounded-lg font-semibold;
+    @apply transition-all duration-300;
+    @apply bg-white/10 backdrop-blur-sm;
+    @apply border border-white/20;
+    @apply hover:bg-white/20 hover:shadow-lg;
+    @apply active:scale-95;
+    @apply focus:outline-none focus:ring-2 focus:ring-white/50 focus:ring-offset-2;
+  }
+
+  /* Icon Button */
+  .btn-icon {
+    @apply p-2 rounded-lg transition-all duration-200;
+    @apply hover:bg-white/10 hover:scale-110;
+    @apply active:scale-95;
+    @apply focus:outline-none focus:ring-2 focus:ring-primary-500;
+  }
+
+  /* Input Field */
+  .input-field {
+    @apply w-full px-4 py-3 rounded-lg;
+    @apply bg-white/5 backdrop-blur-sm;
+    @apply border border-white/10;
+    @apply text-white placeholder-white/50;
+    @apply transition-all duration-200;
+    @apply focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent;
+    @apply hover:bg-white/10;
+  }
+
+  /* Floating Panel */
+  .floating-panel {
+    @apply glass-card p-6;
+    @apply animate-float;
+  }
+
+  /* Gradient Text */
+  .gradient-text {
+    @apply bg-clip-text text-transparent;
+    background-image: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  }
+
+  .gradient-text-neon {
+    @apply bg-clip-text text-transparent;
+    background-image: linear-gradient(135deg, #00f0ff 0%, #bf00ff 100%);
+  }
+
+  /* Card */
+  .card {
+    @apply glass-card p-6;
+  }
+
+  .card-hover {
+    @apply card transition-all duration-300;
+    @apply hover:shadow-2xl hover:-translate-y-1;
+  }
+
+  /* Badge */
+  .badge {
+    @apply inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold;
+    @apply bg-primary-500/20 text-primary-400;
+    @apply border border-primary-500/30;
+  }
+
+  /* Divider */
+  .divider {
+    @apply h-px w-full bg-gradient-to-r from-transparent via-white/20 to-transparent;
+  }
+
+  /* Modal */
+  .modal-backdrop {
+    @apply fixed inset-0 bg-black/50 backdrop-blur-sm;
+    @apply flex items-center justify-center z-50;
+    @apply animate-fade-in;
+  }
+
+  .modal-content {
+    @apply glass-card max-w-2xl max-h-[90vh] overflow-auto;
+    @apply animate-scale-in;
+  }
+
+  /* Tooltip */
+  .tooltip {
+    @apply absolute z-50 px-3 py-2 rounded-lg;
+    @apply bg-gray-900 text-white text-sm;
+    @apply shadow-lg;
+    @apply animate-fade-in;
+  }
+
+  /* Loading Spinner */
+  .spinner {
+    @apply inline-block w-8 h-8 border-4 border-white/20 border-t-white rounded-full;
+    animation: spin 1s linear infinite;
+  }
+
+  /* Shimmer Effect */
+  .shimmer {
+    background: linear-gradient(
+      to right,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(255, 255, 255, 0.3) 50%,
+      rgba(255, 255, 255, 0) 100%
+    );
+    background-size: 1000px 100%;
+    animation: shimmer 2s infinite;
+  }
+
+  /* Grid Pattern */
+  .grid-pattern {
+    background-image:
+      linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+    background-size: 20px 20px;
+  }
+
+  /* Glow Effect */
+  .glow {
+    @apply shadow-neon;
+    animation: glow 2s ease-in-out infinite alternate;
+  }
+
+  /* Slide Animation */
+  .slide-in-right {
+    animation: slideInRight 0.3s ease-out;
+  }
+
+  .slide-in-left {
+    animation: slideInLeft 0.3s ease-out;
+  }
+
+  .slide-in-up {
+    animation: slideInUp 0.3s ease-out;
+  }
+
+  .slide-in-down {
+    animation: slideInDown 0.3s ease-out;
+  }
+}
+
+/* Additional Animations */
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideInUp {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideInDown {
+  from {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Print Styles */
+@media print {
+  .no-print {
+    display: none !important;
+  }
+}
+
+/* Accessibility */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* Focus Visible */
+.focus-visible:focus {
+  @apply outline-none ring-2 ring-primary-500 ring-offset-2;
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
