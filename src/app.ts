@@ -6,10 +6,12 @@ import { stateManager } from './core/state/StateManager';
 import type { Project, ToastMessage } from './types';
 import { generateId } from './utils/helpers';
 import { validateProject } from './utils/validation';
+import { RevealEngine } from './core/engines/RevealEngine';
 
 export class App {
   private container: HTMLElement;
   private toasts: Map<string, ToastMessage> = new Map();
+  private revealEngine: RevealEngine;
 
   constructor() {
     const app = document.getElementById('app');
@@ -17,6 +19,7 @@ export class App {
       throw new Error('App container not found');
     }
     this.container = app;
+    this.revealEngine = new RevealEngine();
   }
 
   /**
@@ -131,27 +134,9 @@ export class App {
             </div>
           </div>
 
-          <textarea
-            id="markdown-editor"
-            class="input-field flex-1 font-mono text-sm resize-none"
-            placeholder="# Your Presentation Title
+          <textarea id="markdown-editor" class="input-field flex-1 font-mono text-sm resize-none" placeholder="# Your Presentation Title
 
-Start writing your presentation in Markdown...
-
-Use --- to separate slides
-
-## Features
-- Full Markdown support
-- Live preview
-- Beautiful themes
-- Export to multiple formats
-
----
-
-## Next Slide
-
-Your content here..."
-          ></textarea>
+Start writing your presentation in Markdown..."></textarea>
 
           <div class="mt-4 flex gap-2">
             <button id="render-btn" class="btn-primary flex-1">
@@ -379,7 +364,7 @@ Your content here..."
   /**
    * Render preview
    */
-  private renderPreview(): void {
+  private async renderPreview(): Promise<void> {
     const editor = document.getElementById('markdown-editor') as HTMLTextAreaElement;
     if (!editor) return;
 
@@ -389,16 +374,53 @@ Your content here..."
       return;
     }
 
-    // TODO: Implement preview rendering
-    this.showToast('Preview rendering not yet implemented', 'info');
+    try {
+      const previewContainer = document.getElementById('preview-container');
+      if (!previewContainer) {
+        this.showToast('Preview container not found', 'error');
+        return;
+      }
+
+      // Clear existing content
+      previewContainer.innerHTML = '';
+
+      // Initialize engine if needed
+      await this.revealEngine.init(previewContainer);
+
+      // Get slide options
+      const transitionSelect = document.getElementById('slide-transition') as HTMLSelectElement;
+
+      const options: import('@/types').SlideOptions = {
+        transition: (transitionSelect?.value || 'slide') as import('@/types').TransitionType,
+      };
+
+      // Render markdown
+      await this.revealEngine.renderMarkdown(markdown, options);
+
+      this.showToast('Preview rendered successfully', 'success');
+    } catch (error) {
+      console.error('Failed to render preview:', error);
+      this.showToast('Failed to render preview', 'error');
+    }
   }
 
   /**
    * Start presentation
    */
-  private startPresentation(): void {
-    // TODO: Implement presentation mode
-    this.showToast('Presentation mode not yet implemented', 'info');
+  private async startPresentation(): Promise<void> {
+    try {
+      // Render preview first if needed
+      await this.renderPreview();
+
+      // Start presentation mode
+      await this.revealEngine.startPresentation();
+
+      stateManager.updateUI({ isPresenting: true });
+      this.showToast('Presentation started! Press ESC to exit', 'success');
+    } catch (error) {
+      console.error('Failed to start presentation:', error);
+      this.showToast('Failed to start presentation', 'error');
+    }
   }
 
   /**
@@ -445,15 +467,80 @@ Your content here..."
   private loadLastProject(): void {
     try {
       const markdown = localStorage.getItem('presentflow-last-markdown');
-      if (markdown) {
-        const editor = document.getElementById('markdown-editor') as HTMLTextAreaElement;
-        if (editor) {
+      const editor = document.getElementById('markdown-editor') as HTMLTextAreaElement;
+
+      if (editor) {
+        if (markdown) {
           editor.value = markdown;
+        } else {
+          // Load default content
+          editor.value = this.getDefaultMarkdown();
         }
       }
     } catch (error) {
       console.error('Failed to load last project:', error);
     }
+  }
+
+  /**
+   * Get default markdown content
+   */
+  private getDefaultMarkdown(): string {
+    return `# Welcome to PresentFlow Pro 🎭
+
+A modern presentation builder with Markdown support
+
+---
+
+## Features ✨
+
+- **Beautiful Themes** - Multiple professional themes
+- **Live Preview** - See changes in real-time
+- **Export Options** - HTML, PDF, and more
+- **Full Markdown** - All standard Markdown syntax
+
+---
+
+## Getting Started 🚀
+
+1. Write your content in Markdown
+2. Separate slides with ---
+3. Click "Render Preview"
+4. Hit "Present" for fullscreen mode
+
+---
+
+## Example Slide
+
+### Code Highlighting
+
+${'```'}javascript
+function hello() {
+  console.log("Hello, World!");
+}
+${'```'}
+
+---
+
+## Lists & Formatting
+
+- **Bold text**
+- *Italic text*
+- ~~Strikethrough~~
+
+1. Numbered lists
+2. Also work great
+3. Very useful!
+
+---
+
+## Ready to Create?
+
+Replace this content with your own presentation!
+
+Press **ESC** to exit presentation mode.
+
+Note: This is a speaker note - only visible to you!`;
   }
 
   /**
@@ -538,11 +625,9 @@ Your content here..."
   /**
    * Exit presentation
    */
-  public exitPresentation(): void {
+  public async exitPresentation(): Promise<void> {
     stateManager.updateUI({ isPresenting: false });
-    if (document.fullscreenElement) {
-      document.exitFullscreen();
-    }
+    await this.revealEngine.exitPresentation();
   }
 
   /**
