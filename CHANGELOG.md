@@ -2,6 +2,88 @@
 
 All notable changes to PresentFlow Pro will be documented in this file.
 
+## [2.1.0] - 2025-10-22
+
+### 🎨 Advanced Mode Released!
+
+The highly anticipated **Advanced Mode** is now available! Create presentations visually with a powerful drag-and-drop canvas editor.
+
+### ✨ New Features
+
+#### Visual Canvas Editor
+- **Infinite Canvas** - Unlimited space for organizing slides
+- **Drag & Drop** - Move slides around freely with mouse
+- **Grid System** - Optional grid with snap-to-grid functionality
+- **Zoom & Pan** - Navigate presentations at 25%-200% zoom
+- **Multi-Select** - Select multiple slides with Shift+Click
+
+#### Slide Management
+- **6 Slide Templates** - Title, Content, Image, Code, Split, Quote
+- **One-Click Creation** - Add slides instantly from sidebar
+- **Visual Previews** - See slide content at a glance
+- **Slide Numbering** - Auto-numbered slides with type indicators
+- **Drag Positioning** - Position slides exactly where you want
+
+#### Properties Panel
+- **Live Content Editing** - Edit markdown directly
+- **Speaker Notes** - Add presenter notes per slide
+- **Background Color** - Custom colors per slide
+- **Text Alignment** - Left, Center, Right, Justify
+- **Transitions** - Per-slide transition effects
+- **Real-time Updates** - See changes instantly
+
+#### Canvas Tools
+- **Select Tool** - Click and select slides
+- **Pan Tool** - Navigate the canvas
+- **Connect Tool** - Link slides together (coming soon)
+- **Zoom Controls** - Slider and preset buttons
+- **Undo/Redo** - Full history with 50 states
+
+#### Keyboard Shortcuts
+- **Ctrl+Z** - Undo changes
+- **Ctrl+Shift+Z** - Redo changes
+- **Ctrl+D** - Duplicate selected slides
+- **Delete** - Remove selected slides
+- **Escape** - Deselect all
+- **Shift+Click** - Multi-select
+
+#### Export & Preview
+- **Live Preview** - Preview from advanced mode
+- **Export Support** - All export formats work
+- **Slide Ordering** - Automatic slide order preservation
+
+### 🔧 Technical Improvements
+
+#### Architecture
+- Comprehensive slide state management
+- Canvas rendering system
+- Event delegation for performance
+- Responsive properties panel
+
+#### Performance
+- Efficient DOM updates
+- Optimized drag handling
+- Smooth zoom/pan transforms
+- Minimal re-renders
+
+#### Code Quality
+- Full TypeScript coverage
+- Type-safe slide operations
+- Clean component structure
+- Comprehensive error handling
+
+### 📦 Updated Dependencies
+- No new dependencies added
+- Uses existing Reveal.js engine
+- Leverages current state management
+
+### 🐛 Bug Fixes
+- Fixed mode switching behavior
+- Improved welcome modal messaging
+- Enhanced state persistence
+
+---
+
 ## [2.0.0] - 2025-10-22
 
 ### 🎉 Complete Modernization & Production Release
