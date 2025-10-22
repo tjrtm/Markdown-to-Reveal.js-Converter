@@ -3,10 +3,12 @@
  */
 
 import { stateManager } from './core/state/StateManager';
-import type { Project, ToastMessage } from './types';
+import type { Project, ToastMessage, ExportFormat } from './types';
 import { generateId } from './utils/helpers';
 import { validateProject } from './utils/validation';
 import { RevealEngine } from './core/engines/RevealEngine';
+import { ExportManager } from './core/export/ExportManager';
+import { convertMarkdownToSlides } from './utils/markdown';
 
 export class App {
   private container: HTMLElement;
@@ -585,7 +587,119 @@ Note: This is a speaker note - only visible to you!`;
    * Show export menu
    */
   private showExportMenu(): void {
-    this.showToast('Export feature coming soon', 'info');
+    // Create modal for export options
+    const modal = document.createElement('div');
+    modal.className = 'modal-backdrop';
+    modal.innerHTML = `
+      <div class="modal-content p-8 max-w-md">
+        <h2 class="text-2xl font-bold mb-4">Export Presentation</h2>
+        <p class="text-gray-400 mb-6">Choose your export format:</p>
+
+        <div class="space-y-3">
+          <button class="export-option btn-secondary w-full text-left" data-format="html">
+            <span class="text-2xl">🌐</span>
+            <div class="ml-3">
+              <div class="font-semibold">HTML (Standalone)</div>
+              <div class="text-sm text-gray-400">Single file with all resources</div>
+            </div>
+          </button>
+
+          <button class="export-option btn-secondary w-full text-left" data-format="pdf">
+            <span class="text-2xl">📄</span>
+            <div class="ml-3">
+              <div class="font-semibold">PDF</div>
+              <div class="text-sm text-gray-400">Print-friendly document</div>
+            </div>
+          </button>
+
+          <button class="export-option btn-secondary w-full text-left" data-format="json">
+            <span class="text-2xl">💾</span>
+            <div class="ml-3">
+              <div class="font-semibold">JSON Project</div>
+              <div class="text-sm text-gray-400">Save and reload later</div>
+            </div>
+          </button>
+
+          <button class="export-option btn-secondary w-full text-left" data-format="markdown">
+            <span class="text-2xl">📝</span>
+            <div class="ml-3">
+              <div class="font-semibold">Markdown</div>
+              <div class="text-sm text-gray-400">Plain text format</div>
+            </div>
+          </button>
+        </div>
+
+        <button class="btn-secondary w-full mt-6" onclick="this.closest('.modal-backdrop').remove()">
+          Cancel
+        </button>
+      </div>
+    `;
+
+    document.body.appendChild(modal);
+
+    // Add click handlers
+    modal.querySelectorAll('.export-option').forEach((btn) => {
+      btn.addEventListener('click', async () => {
+        const format = (btn as HTMLElement).dataset.format as ExportFormat;
+        modal.remove();
+        await this.exportPresentation(format);
+      });
+    });
+
+    // Close on backdrop click
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) {
+        modal.remove();
+      }
+    });
+  }
+
+  /**
+   * Export presentation
+   */
+  private async exportPresentation(format: ExportFormat): Promise<void> {
+    try {
+      const editor = document.getElementById('markdown-editor') as HTMLTextAreaElement;
+      if (!editor) {
+        this.showToast('Editor not found', 'error');
+        return;
+      }
+
+      const markdown = editor.value;
+      if (!markdown.trim()) {
+        this.showToast('No content to export', 'warning');
+        return;
+      }
+
+      // Create project from current content
+      const slides = convertMarkdownToSlides(markdown);
+      const transitionSelect = document.getElementById('slide-transition') as HTMLSelectElement;
+
+      const project: Project = {
+        id: generateId('project'),
+        name: 'My Presentation',
+        mode: 'quick',
+        createdAt: Date.now(),
+        updatedAt: Date.now(),
+        version: '2.0.0',
+        slides,
+        globalOptions: {
+          transition: (transitionSelect?.value || 'slide') as any,
+        },
+      };
+
+      this.showToast(`Exporting as ${format.toUpperCase()}...`, 'info');
+
+      await ExportManager.export(project, format, {
+        includeNotes: true,
+        quality: 'high',
+      });
+
+      this.showToast(`Exported successfully as ${format.toUpperCase()}!`, 'success');
+    } catch (error) {
+      console.error('Export failed:', error);
+      this.showToast('Export failed. Please try again.', 'error');
+    }
   }
 
   /**

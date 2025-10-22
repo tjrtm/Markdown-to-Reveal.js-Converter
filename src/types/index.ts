@@ -155,7 +155,7 @@ export interface AppState {
 }
 
 export interface ExportOptions {
-  format: ExportFormat;
+  format?: ExportFormat;
   includeNotes?: boolean;
   quality?: 'low' | 'medium' | 'high';
   pageSize?: 'A4' | 'Letter' | '16:9' | '4:3';
