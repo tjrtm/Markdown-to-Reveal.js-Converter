@@ -298,7 +298,19 @@ export class StateManager {
       const serialized = localStorage.getItem(this.STORAGE_KEY);
       if (serialized) {
         const loaded = JSON.parse(serialized);
-        this.setState(loaded);
+
+        // Deep merge loaded state with current state to preserve default values
+        if (loaded.theme) {
+          this.state.theme = loaded.theme;
+        }
+        if (loaded.settings) {
+          this.state.settings = { ...this.state.settings, ...loaded.settings };
+        }
+        if (loaded.ui) {
+          this.state.ui = { ...this.state.ui, ...loaded.ui };
+        }
+
+        this.notifyListeners();
       }
     } catch (error) {
       console.error('Failed to load state from localStorage:', error);
