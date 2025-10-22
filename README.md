@@ -21,6 +21,17 @@ Transform your markdown into beautiful presentations with live preview, multiple
 - **Auto-save** - Automatically saves your work to localStorage
 - **File Operations** - Load and save markdown files
 
+### 🎨 **Advanced Mode** (NEW!)
+- **Visual Canvas Editor** - Drag-and-drop slide management on an infinite canvas
+- **Slide Templates** - 6 pre-built slide types (Title, Content, Image, Code, Split, Quote)
+- **Properties Panel** - Live editing of content, notes, and styling
+- **Undo/Redo** - Full history management with keyboard shortcuts
+- **Multi-Select** - Select and manipulate multiple slides at once
+- **Zoom & Pan** - Navigate large presentations with ease
+- **Grid Snapping** - Align slides perfectly with optional grid snap
+- **Live Preview** - Preview your presentation without leaving advanced mode
+- **Keyboard Shortcuts** - Ctrl+Z, Ctrl+D, Delete, and more
+
 ### 📤 **Export System**
 - **HTML** - Standalone single-file presentations
 - **PDF** - High-quality print-friendly documents
@@ -72,7 +83,7 @@ The application will open at `http://localhost:3000`
 
 ## 📖 Usage
 
-### Creating Your First Presentation
+### Quick Mode - Creating Your First Presentation
 
 1. **Write Markdown** - Use the editor on the left
 2. **Separate Slides** - Use `---` to create new slides
@@ -80,6 +91,16 @@ The application will open at `http://localhost:3000`
 4. **Preview** - Click "Render Preview" to see your slides
 5. **Present** - Hit "Present" for fullscreen mode
 6. **Export** - Choose your export format
+
+### Advanced Mode - Visual Slide Builder
+
+1. **Switch to Advanced Mode** - Click the "🎨 Advanced Mode" button in the header
+2. **Add Slides** - Click any slide type from the left sidebar
+3. **Arrange Slides** - Drag slides around the canvas to organize them
+4. **Edit Content** - Click a slide to open the properties panel
+5. **Customize** - Change colors, transitions, alignment, and more
+6. **Preview** - Click "👁️ Preview" to see your presentation
+7. **Export** - Use the "📤 Export" button to save in various formats
 
 ### Markdown Syntax
 
@@ -122,15 +143,24 @@ function hello() {
 
 ### Keyboard Shortcuts
 
+#### Quick Mode
 | Shortcut | Action |
 |----------|--------|
 | `Ctrl/Cmd + S` | Save project |
 | `Ctrl/Cmd + N` | New project |
 | `Ctrl/Cmd + O` | Open project |
-| `Ctrl/Cmd + Z` | Undo |
-| `Ctrl/Cmd + Shift + Z` | Redo |
 | `F11` | Toggle fullscreen |
 | `ESC` | Exit presentation mode |
+
+#### Advanced Mode
+| Shortcut | Action |
+|----------|--------|
+| `Ctrl/Cmd + Z` | Undo |
+| `Ctrl/Cmd + Shift + Z` | Redo |
+| `Ctrl/Cmd + D` | Duplicate selected slides |
+| `Delete` / `Backspace` | Delete selected slides |
+| `ESC` | Deselect all slides |
+| `Shift + Click` | Multi-select slides |
 
 ---
 
