@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Markdown to Reveal.js Converter</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/reveal.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/theme/black.min.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="editor-panel">
+    <h1>Markdown Converter</h1>
+    <div id="source-selection">
+      <label>
+        <input type="radio" name="source-type" value="editor" checked>
+        Use Markdown Editor
+      </label>
+      <label>
+        <input type="radio" name="source-type" value="upload">
+        Upload Markdown File
+      </label>
+    </div>
+    <textarea id="markdown-input" placeholder="Type your Markdown here..."></textarea>
+    <input type="file" id="md-file-upload" accept=".md" style="display:none; margin-top: 10px;">
+    <div id="options">
+      <label>
+        <input type="checkbox" id="auto-preview">
+        Live Preview
+      </label>
+      <button id="render-button">Render Slides</button>
+      <button id="full-screen-button">Full Screen (Esc to exit)</button>
+    </div>
+    <div id="slide-options">
+      <h2>Slide Options</h2>
+      <div class="option-group">
+        <label for="bg-color">Background Color:</label>
+        <input type="color" id="bg-color" value="#000000">
+      </div>
+      <div class="option-group">
+        <label for="bg-image">Custom Background URL/Image:<br /><span style="font-size:12px;">https://picsum.photos/200/300/?blur</span></label>
+        <input type="text" id="bg-image" placeholder="https://...">
+      </div>
+      <div class="option-group">
+        <label for="transition">Transition Type:</label>
+        <select id="transition">
+          <option value="none">None</option>
+          <option value="fade">Fade</option>
+          <option value="slide" selected>Slide</option>
+          <option value="convex">Convex</option>
+          <option value="concave">Concave</option>
+          <option value="zoom">Zoom</option>
+        </select>
+      </div>
+      <div class="option-group">
+        <label for="global-text-align">Global Text Align:</label>
+        <select id="global-text-align">
+          <option value="left">Left</option>
+          <option value="center" selected>Center</option>
+          <option value="right">Right</option>
+        </select>
+      </div>
+      <div class="option-group">
+        <label for="font-size">Global Font Size (px):</label>
+        <input type="number" id="font-size" value="16" min="10" max="72">
+      </div>
+    </div>
+  </div>
+
+  <div id="preview-panel">
+    <div class="reveal" id="preview-reveal">
+      <div class="slides" id="slides-container">
+
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/reveal.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/plugin/markdown/markdown.esm.js" type="module"></script>
+
+  <script src="main.js" type="module"></script>
+</body>
+</html>
